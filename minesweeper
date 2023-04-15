@@ -1,0 +1,43 @@
+grid = [
+["-", "-", "-", "#", "#"],
+["-", "#", "-", "-", "-"],
+["-", "-", "#", "-", "-"],
+["-", "#", "#", "-", "-"],
+["-", "-", "-", "-", "-"]]
+
+# Difining function minesweeper
+# Using range function to access the positions of i (row) and j(column)
+# Counting rows and columns and adding 1 to each iteration
+# Depending on where the mine "#" is the number count will go up
+# Using len function to ensure that counting stays within the grid
+
+def minesweeper(grid):
+    
+    def counting_mines(r,c):
+        count = 0
+        for i in range(-1,2):
+            for j in range(-1,2):
+                if(i== 0 and j== 0):
+                    continue
+                count_r,count_c= r + i, c + j
+                if 0 <= count_c < len(grid[0])  and  0 <= count_r < len(grid) and grid[count_r][count_c] =='#':
+                    count += 1
+        return str(count)
+
+    output=[]                             # final output place holder
+    for r , row in enumerate(grid):       # extracted the row by using enumerate
+        row_output=[]
+        for c , cell in enumerate(row):   # extracted the column by using enumerate
+            if cell =='#':
+                row_output.append('#')
+            else:
+                row_output.append(counting_mines(r,c))
+        output.append(row_output)
+    return output
+
+# Printing new grid where each dash is replaced by a digit,
+# indicating the number of mines immediately adjacent to the spot
+
+output_grid= minesweeper(grid)
+for row in output_grid:
+    print(row)
